@@ -3,7 +3,11 @@ require("dotenv").config();
 
 const dbconexion = async () => {
   try {
-    await mongoose.connect(process.env.CADENA);
+    await mongoose.connect(process.env.CADENA, {
+      keepAlive: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Base de datos conectada");
   } catch (error) {
     console.log(error);

@@ -1,5 +1,8 @@
 const { Router } = require("express");
-const { validateCreate } = require("../validators/usuarios.validator");
+const {
+  validateCreate,
+  validatePut,
+} = require("../validators/usuarios.validator");
 const router = Router();
 const {
   usuariosGet,
@@ -11,7 +14,7 @@ const {
 
 router.get("/", usuariosGet);
 router.post("/", validateCreate, usuariosPost);
-router.put("/:id", usuariosPut);
+router.put("/:id", validatePut, usuariosPut);
 router.patch("/", usuariosPatch);
 router.delete("/", usuariosDelete);
 
