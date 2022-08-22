@@ -48,8 +48,15 @@ const usuariosPatch = (req, res = response) => {
   res.json("patch api - controller");
 };
 
-const usuariosDelete = (req, res = response) => {
-  res.json("delete api - controller");
+const usuariosDelete = async (req, res = response) => {
+  const id = req.params.id;
+
+  //fisicamente lo borramos no recomendable hoy en dia
+  // const usuario = await Usuario.findByIdAndDelete(id);
+
+  //solo pasamos el estado en false
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+  res.json({ usuario });
 };
 
 module.exports = {

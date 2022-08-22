@@ -52,7 +52,21 @@ const validatePut = [
   },
 ];
 
+const validateDelete = [
+  check("id", "No es un id valido").isMongoId(),
+  check("id").custom(async (id) => {
+    const existeUsuarioPorId = await Usuario.findById(id);
+    if (!existeUsuarioPorId) {
+      throw new Error(`El usuairo con el id: ${id} no existe`);
+    }
+  }),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
 module.exports = {
   validateCreate,
   validatePut,
+  validateDelete,
 };
