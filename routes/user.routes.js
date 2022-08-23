@@ -3,7 +3,9 @@ const {
   validateCreate,
   validatePut,
   validateDelete,
-} = require("../validators/usuarios.validator");
+} = require("../middlewares/usuarios.validator");
+const { validarJWT } = require("../middlewares/jwt.validator");
+const { AdminRol, tieneRol } = require("../middlewares/validar.roles");
 const router = Router();
 const {
   usuariosGet,
@@ -17,6 +19,12 @@ router.get("/", usuariosGet);
 router.post("/", validateCreate, usuariosPost);
 router.put("/:id", validatePut, usuariosPut);
 router.patch("/", usuariosPatch);
-router.delete("/:id", validateDelete, usuariosDelete);
+router.delete(
+  "/:id",
+  validarJWT,
+  tieneRol("ADMIN_ROL", "VENTAS_ROL"),
+  validateDelete,
+  usuariosDelete
+);
 
 module.exports = router;
